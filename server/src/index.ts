@@ -23,7 +23,7 @@ const mount = async (app: Application) => {
   //     }
   //   }
   //   return res.send("failed to deleted listing");
-  const listings = await db.listings.find({}).toArray();
-  console.log(listings);
+  // const listings = await db.listings.find({}).toArray();
+  // console.log(listings);
 };
 mount(express());

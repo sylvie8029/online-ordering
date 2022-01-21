@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 require("dotenv").config();
 
 import { ObjectId } from "mongodb";
@@ -9,14 +10,14 @@ const seed = async () => {
     console.log(`[seed] : running...`);
 
     const db = await connectDatabase();
-    export const listings: Listing[] = [
+    const listings: Listing[] = [
       {
         _id: new ObjectId(),
-        image: "https://res.cloudinary.com/tiny-house/image/upload/v1560641352/mock/Toronto/toronto-listing-1_exv0tf.jpg",
-        price: 10000,
-        rating: 5,
+        productName: "gongbaojiding",
+        image: "image001",
+        price: 10,
+        rating: 1,
       },
-      // ...
     ];
 
     for (const listing of listings) {
