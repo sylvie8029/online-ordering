@@ -2,11 +2,11 @@ import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
   type Listing {
-  id: ID;
-  productName: String!;
-  image: String!;
-  price: Int!;
-  rating: Int!;
+    id: ID!
+    productName: String!
+    image: String!
+    price: Int!
+    rating: Int!
   }
 
   type Query {

@@ -11,13 +11,9 @@ const seed = async () => {
 
     const db = await connectDatabase();
     const listings: Listing[] = [
-      {
-        _id: new ObjectId(),
-        productName: "gongbaojiding",
-        image: "image001",
-        price: 10,
-        rating: 1,
-      },
+      { _id: new ObjectId(), productName: "gongbaojiding", image: "image001", price: 10, rating: 1 },
+      { _id: new ObjectId(), productName: "yuxiangrousi", image: "image002", price: 20, rating: 2 },
+      { _id: new ObjectId(), productName: "huiguorou", image: "image003", price: 30, rating: 3 },
     ];
 
     for (const listing of listings) {
