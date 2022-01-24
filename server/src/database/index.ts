@@ -8,7 +8,7 @@ const url = `mongodb+srv://${user}:${userPassword}@${cluster}.mongodb.net/myFirs
 export const connectDatabase = async (): Promise<Database> => {
   const client = await MongoClient.connect(url);
   const db = client.db("main_data");
-  return { listings: db.collection("test_listings") };
+  return { listings: db.collection("test_listings"), users: db.collection("users"), purchasings: db.collection("purchasing") };
 };
 
 process.env.variables;
