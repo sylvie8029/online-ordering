@@ -1,6 +1,8 @@
 import React from "react";
+import { Listings as ListingsData } from "./__generated__/Listings";
+import { DeleteListing as DeleteListingData, DeleteListingVariables } from "./__generated__/DeleteListing";
 // import { server } from "../../lib/api";
-import { DeleteListingData, DeleteListingVariables, ListingsData } from "./types";
+// import { DeleteListingData, DeleteListingVariables, ListingsData } from "./types";
 import { gql, useQuery, useMutation } from "@apollo/client";
 
 const LISTINGS = gql`
