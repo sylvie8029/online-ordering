@@ -1,6 +1,6 @@
 export interface Listing {
   id: string;
-  productName: string;
+  dishName: string;
   image: string;
   price: number;
   rating: number;

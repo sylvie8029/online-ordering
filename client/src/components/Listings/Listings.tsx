@@ -10,7 +10,7 @@ const LISTINGS = gql`
     listings {
       id
       image
-      productName
+      dishName
       price
       rating
     }
@@ -24,10 +24,10 @@ const DELETE_LISTING = gql`
   }
 `;
 interface Props {
-  productName: string;
+  dishName: string;
 }
 
-export const Listings = ({ productName }: Props) => {
+export const Listings = ({ dishName }: Props) => {
   // const [listings, setListings] = useState<Listing[] | null>(null);
   const { data, loading, error, refetch } = useQuery<ListingsData>(LISTINGS);
 
@@ -63,7 +63,7 @@ export const Listings = ({ productName }: Props) => {
       {listings.map((listing) => {
         return (
           <li key={listing.id}>
-            {listing.productName}
+            {listing.dishName}
             {""}
             <button onClick={() => handleDeleteListing(listing.id)}>Delete</button>
           </li>
@@ -86,7 +86,7 @@ export const Listings = ({ productName }: Props) => {
 
   return (
     <div>
-      <h2>{productName}</h2>
+      <h2>{dishName}</h2>
       {listingsList}
       {deleteListingLoadingMessage}
       {deleteListingErrorMessage}

@@ -1,20 +1,36 @@
 import { Collection, ObjectId } from "mongodb";
+
+export interface Register {
+  _id?: string;
+  token?: string;
+  avatar?: string;
+  walletId?: string;
+  didRequest: boolean;
+}
+
 export enum ListingType {
-  Classic = "CLASSIC",
-  Modern = "MODERN",
+  Chinese = "CHINESE",
+  Korea = "KOREA",
+  Japanese = "JAPANESE",
+  American = "AMERICAN",
+  India = "INDIA",
 }
 
 export interface Listing {
   _id: ObjectId;
-  productName: string;
+  dishName: string;
   image: string;
   price: number;
   rating: number;
+  author: string;
+
   type: ListingType;
+  orderings: ObjectId[];
 }
 
-export interface Purchasing {
+export interface Ordering {
   _id: ObjectId;
+  listing: ObjectId;
 }
 export interface User {
   _id: string;
@@ -24,11 +40,11 @@ export interface User {
   contact: string;
   walletId?: string;
 
-  purchasings: ObjectId[];
+  orderings: ObjectId[];
   listings: ObjectId[];
 }
 export interface Database {
-  purchasings: Collection<Purchasing>;
+  ordering: Collection<Ordering>;
   listings: Collection<Listing>;
   users: Collection<User>;
 }

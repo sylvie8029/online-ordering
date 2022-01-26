@@ -5,10 +5,10 @@ import { Database, Listing } from "../../../lib/types";
 export const listingResolvers: IResolvers = {
   Query: {
     listings: async (_root: undefined, __, db: Database): Promise<Listing[]> => {
-      console.group("listings resolver");
-      console.log(`db:`, db);
-      console.groupEnd();
-      console.log(`db.listings: ${db.listings}`);
+      // console.group("listings resolver");
+      // console.log(`db:`, db);
+      // console.groupEnd();
+      // console.log(`db.listings: ${db.listings}`);
       return await db.listings.find({}).toArray();
     },
   },

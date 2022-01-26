@@ -4,6 +4,7 @@
   "dependencies": {
     "apollo-server-express": "^2.7.0",
     "express": "^4.17.2",
+    "googleapis": "^92.0.0",
     "graphql": "^14.7.0",
     "lodash.merge": "^4.6.2",
     "mongodb": "^4.3.1"
@@ -26,7 +27,8 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "build": "tsc -p ./",
-    "seed": "ts-node temp/seed.ts"
+    "seed": "ts-node temp/seed.ts",
+    "clear": "ts-node temp/clear.ts"
   },
   "main": "index.js",
   "author": "",

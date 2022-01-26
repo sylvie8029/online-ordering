@@ -11,7 +11,7 @@ export interface Listings_listings {
   __typename: "Listing";
   id: string;
   image: string;
-  productName: string;
+  dishName: string;
   price: number;
   rating: number;
 }

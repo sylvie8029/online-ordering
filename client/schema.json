@@ -68,7 +68,7 @@
             "deprecationReason": null
           },
           {
-            "name": "productName",
+            "name": "dishName",
             "description": "",
             "args": [],
             "type": {

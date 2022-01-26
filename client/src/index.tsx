@@ -26,7 +26,7 @@ ReactDOM.render(
   // <React.StrictMode>
   <ApolloProvider client={client}>
     <App />
-    <Listings productName="product List"></Listings>
+    <Listings dishName="product List"></Listings>
   </ApolloProvider>,
   // </React.StrictMode>,
   document.getElementById("root")
