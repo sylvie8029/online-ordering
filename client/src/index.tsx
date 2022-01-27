@@ -1,24 +1,37 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomePage, AuthorPage, Listing, Listings, NotFound, User } from "./components";
+import { HomePage, AuthorPage, Listing, Listings, NotFound, User, LoginPage } from "./components";
+import { Layout } from "antd";
+import { Register } from "./lib/types";
+
+const initialRegister: Register = {
+  id: null,
+  token: null,
+  avatar: null,
+  hasWallet: null,
+  didRequest: false,
+};
 
 const client = new ApolloClient({ uri: "/api", cache: new InMemoryCache() });
 const App = () => {
+  const [register, setRegister] = useState<Register>(initialRegister);
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/author" element={<AuthorPage />}></Route>
-        <Route path="/listing/:id" element={<Listing />}></Route>
-        {/* <Route path="/listings/:location" element={<Listings />}></Route> */}
-        {/* <Route path="/login" element={<Login />}></Route> */}
-        <Route path="/user/:id" element={<User />}></Route>
-        <Route path="*" element={<NotFound />}></Route>
-      </Routes>
+      <Layout id="app">
+        <Routes>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/author" element={<AuthorPage />}></Route>
+          <Route path="/listing/:id" element={<Listing />}></Route>
+          {/* <Route path="/listings/:location" element={<Listings />}></Route> */}
+          <Route path="/login" element={<LoginPage setRegister={setRegister} />}></Route>
+          <Route path="/user/:id" element={<User />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </Layout>
     </Router>
   );
 };
