@@ -44,7 +44,7 @@ export interface User {
   listings: ObjectId[];
 }
 export interface Database {
-  ordering: Collection<Ordering>;
+  orderings: Collection<Ordering>;
   listings: Collection<Listing>;
   users: Collection<User>;
 }

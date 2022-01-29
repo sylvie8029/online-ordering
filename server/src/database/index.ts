@@ -9,7 +9,5 @@ const url = `mongodb+srv://${user}:${userPassword}@${cluster}.mongodb.net/myFirs
 export const connectDatabase = async (): Promise<Database> => {
   const client = await MongoClient.connect(url);
   const db = client.db("main_data");
-  return { listings: db.collection<Listing>("listings"), users: db.collection<User>("users"), ordering: db.collection<Ordering>("ordering") };
+  return { listings: db.collection<Listing>("listings"), users: db.collection<User>("users"), orderings: db.collection<Ordering>("orderings") };
 };
-
-process.env.variables;

@@ -1,4 +1,6 @@
 import { google } from "googleapis";
+/* eslint-disable @typescript-eslint/no-var-requires */
+require("dotenv").config();
 
 const auth = new google.auth.OAuth2(process.env.G_CLIENT_ID, process.env.G_CLIENT_SECRET, `${process.env.PUBLIC_URL}/login`);
 

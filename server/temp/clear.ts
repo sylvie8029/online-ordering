@@ -9,12 +9,12 @@ const clear = async () => {
 
     const db = await connectDatabase();
 
-    const orderings = await db.ordering.find({}).toArray();
+    const orderings = await db.orderings.find({}).toArray();
     const listings = await db.listings.find({}).toArray();
     const users = await db.users.find({}).toArray();
 
     if (orderings.length > 0) {
-      await db.ordering.drop();
+      await db.orderings.drop();
     }
 
     if (listings.length > 0) {

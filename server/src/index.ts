@@ -4,7 +4,9 @@ import { ApolloServer } from "apollo-server-express";
 import { connectDatabase } from "./database";
 import { typeDefs, resolvers } from "./graphql";
 
-const port = 9000;
+/* eslint-disable @typescript-eslint/no-var-requires */
+require("dotenv").config();
+
 const mount = async (app: Application) => {
   const db = await connectDatabase();
 
@@ -12,8 +14,8 @@ const mount = async (app: Application) => {
   const server = new ApolloServer({ typeDefs, resolvers, context: () => db });
 
   server.applyMiddleware({ app, path: "/api" });
-  app.listen(port);
-  console.log(`[app] : http://localhost:${port}`);
+  app.listen(process.env.PORT);
+  console.log(`[app] : http://localhost:${process.env.PORT}`);
 
   app.get("/listings", (_req, res) => res.send(listings));
   // app.post("/delete-listing", (req, res) => {

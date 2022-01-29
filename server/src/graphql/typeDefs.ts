@@ -8,23 +8,14 @@ export const typeDefs = gql`
     hasWallet: Boolean
     didRequest: Boolean!
   }
-  type Listing {
-    id: ID!
-    dishName: String!
-    image: String!
-    price: Int!
-    rating: Int!
-  }
 
   type Query {
     authUrl: String!
-    listings: Listing
   }
 
   type Mutation {
     logIn(input: LogInInput): Register!
     logOut: Register!
-    deleteListing: Listing
   }
   input LogInInput {
     code: String!

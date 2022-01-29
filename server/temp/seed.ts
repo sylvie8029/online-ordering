@@ -14,12 +14,12 @@ const seed = async () => {
       {
         _id: "5d378db94e84753160e08b55",
         token: "token_************",
-        name: "James J.",
+        name: "wylian",
         avatar: "001",
-        contact: "james@tinyhouse.com",
+        contact: "wylian.sylvie@gmail.com",
         walletId: "acct_************",
         orderings: [],
-        listings: [new ObjectId("61eca952ad20d9b33fae15b0"), new ObjectId("61eed4af7d4a2a87198beb7f"), new ObjectId("61eed4af7d4a2a87198beb80")],
+        listings: [],
       },
     ];
     const listings: Listing[] = [

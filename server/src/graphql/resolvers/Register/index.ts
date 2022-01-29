@@ -35,21 +35,43 @@ const logInViaGoogle = async (code: string, token: string, db: Database): Promis
     { returnDocument: "after" }
   );
   let register = updateRes.value;
+  // console.log(`register:`, register);
+
+  // return register as User;
 
   if (!register) {
-    const insertRes = await db.users.insertOne({
-      _id: userId,
-      token,
-      name: userName,
-      avatar: userAvatar,
-      contact: userEmail,
-      orderings: [],
-      listings: [],
-    });
-    register = await db.users.findOne({ _id: insertRes.insertedId });
+    try {
+      const newUser = {
+        _id: userId,
+        token,
+        name: userName,
+        avatar: userAvatar,
+        contact: userEmail,
+        orderings: [],
+        listings: [],
+      };
+      await db.users.insertOne(newUser);
+
+      register = newUser;
+    } catch (error) {
+      throw new Error(`fail to inser one ${error}`);
+    }
   }
 
-  return;
+  // if (!register) {
+  //   const insertRes = await db.users.insertOne({
+  //     _id: userId,
+  //     token,
+  //     name: userName,
+  //     avatar: userAvatar,
+  //     contact: userEmail,
+  //     orderings: [],
+  //     listings: [],
+  //   });
+  //   register = insertRes.op[0];
+  // }
+
+  return register;
 };
 
 export const registerResolver: IResolvers = {
@@ -63,7 +85,7 @@ export const registerResolver: IResolvers = {
     },
   },
   Mutation: {
-    logIn: async (_root: undefined, { input }: LogInArgs, { db }: { db: Database }): Promise<Register> => {
+    logIn: async (_root: undefined, { input }: LogInArgs, db: Database): Promise<Register> => {
       // return "Mutation.logIn";
       try {
         const code = input ? input.code : null;
@@ -81,7 +103,7 @@ export const registerResolver: IResolvers = {
           didRequest: true,
         };
       } catch (error) {
-        throw new Error(`fail to log in: ${"error"}`);
+        throw new Error(`fail to log in: ${error}`);
       }
     },
     logOut: (): Register => {
