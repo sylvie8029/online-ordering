@@ -74,7 +74,7 @@ const logInViaGoogle = async (code: string, token: string, db: Database): Promis
   return register;
 };
 
-export const registerResolver: IResolvers = {
+export const registerResolvers: IResolvers = {
   Query: {
     authUrl: (): string => {
       try {

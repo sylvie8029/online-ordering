@@ -4,9 +4,9 @@ import { Card, Layout, Spin, Typography } from "antd";
 import loginLogo from "./assets/loginLogo.png";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { AuthUrl as AuthUrlData } from "../../lib/graphql/queries/AuthUrl/__generated__/AuthUrl";
-import { AUTH_URL } from "../../lib/graphql/queries/index";
+import { AUTH_URL } from "../../lib/graphql/queries";
 import { LogIn as LogInData, LogInVariables } from "../../lib/graphql/mutations/LogIn/__generated__/LogIn";
-import { LOG_IN } from "../../lib/graphql/mutations/LogIn/index";
+import { LOG_IN } from "../../lib/graphql/mutations/LogIn";
 import { ErrorBanner } from "../ErrorBanner";
 import { displaySuccessNotification, displayErrorMessage } from "../../lib/utils";
 import { Navigate } from "react-router-dom";
@@ -59,7 +59,9 @@ export const LoginPage = ({ setRegister }: Props) => {
       </Content>
     );
   }
-  const logInErrorBannerElement = logInError ? <ErrorBanner description="We weren't able to log you in. Please try again soon." /> : null;
+  const logInErrorBannerElement = logInError ? (
+    <ErrorBanner description="We weren't able to log you in to order-online sys.. Please try again later." />
+  ) : null;
 
   if (logInData && logInData.logIn) {
     const { id: registerId } = logInData.logIn;

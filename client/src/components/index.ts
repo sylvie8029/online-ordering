@@ -6,3 +6,5 @@ export * from "./NotFound";
 export * from "./Login";
 export * from "./NotFound";
 export * from "./User";
+export * from "./Header";
+export * from "./Menu";

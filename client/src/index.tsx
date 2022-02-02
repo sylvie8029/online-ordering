@@ -4,9 +4,11 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomePage, AuthorPage, Listing, Listings, NotFound, User, LoginPage } from "./components";
+import { HomePage, AuthorPage, Listing, Listings, NotFound, User, LoginPage, AppHeader } from "./components";
 import { Layout } from "antd";
 import { Register } from "./lib/types";
+
+import { Affix } from "antd";
 
 const initialRegister: Register = {
   id: null,
@@ -19,8 +21,12 @@ const initialRegister: Register = {
 const client = new ApolloClient({ uri: "/api", cache: new InMemoryCache() });
 const App = () => {
   const [register, setRegister] = useState<Register>(initialRegister);
+  console.log(`register:`, register);
   return (
     <Router>
+      <Affix offsetTop={1} className="app__affix-header">
+        <AppHeader />
+      </Affix>
       <Layout id="app">
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
@@ -39,7 +45,7 @@ ReactDOM.render(
   // <React.StrictMode>
   <ApolloProvider client={client}>
     <App />
-    <Listings dishName="product List"></Listings>
+    {/* <Listings dishName="product List"></Listings> */}
   </ApolloProvider>,
   // </React.StrictMode>,
   document.getElementById("root")
