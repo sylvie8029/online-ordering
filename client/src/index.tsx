@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomePage, AuthorPage, Listing, Listings, NotFound, User, LoginPage, AppHeader } from "./components";
+import { HomePage, CookerPage, Listing, Listings, NotFound, User, LoginPage, AppHeader } from "./components";
 import { Layout } from "antd";
 import { Register } from "./lib/types";
 
@@ -24,13 +24,13 @@ const App = () => {
   console.log(`register:`, register);
   return (
     <Router>
-      <Affix offsetTop={1} className="app__affix-header">
-        <AppHeader register={register} />
-      </Affix>
       <Layout id="app">
+        <Affix offsetTop={0} className="app__affix-header">
+          <AppHeader register={register} setRegister={setRegister} />
+        </Affix>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
-          <Route path="/author" element={<AuthorPage />}></Route>
+          <Route path="/cooker" element={<CookerPage />}></Route>
           <Route path="/listing/:id" element={<Listing />}></Route>
           {/* <Route path="/listings/:location" element={<Listings />}></Route> */}
           <Route path="/login" element={<LoginPage setRegister={setRegister} />}></Route>

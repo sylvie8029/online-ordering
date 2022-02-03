@@ -30,7 +30,7 @@ const seed = async () => {
         price: 10,
         rating: 1,
         type: ListingType.Chinese,
-        author: "china",
+        cooker: "china",
         orderings: [],
       },
       {
@@ -40,7 +40,7 @@ const seed = async () => {
         price: 20,
         rating: 2,
         type: ListingType.American,
-        author: "american",
+        cooker: "american",
         orderings: [],
       },
       {
@@ -50,7 +50,7 @@ const seed = async () => {
         price: 30,
         rating: 3,
         type: ListingType.Japanese,
-        author: "japan",
+        cooker: "japan",
         orderings: [],
       },
     ];

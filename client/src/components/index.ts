@@ -1,5 +1,5 @@
 export * from "./Listings";
-export * from "./Author";
+export * from "./Cooker";
 export * from "./Home";
 export * from "./Listing";
 export * from "./NotFound";

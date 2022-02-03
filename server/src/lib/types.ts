@@ -22,7 +22,7 @@ export interface Listing {
   image: string;
   price: number;
   rating: number;
-  author: string;
+  cooker: string;
 
   type: ListingType;
   orderings: ObjectId[];

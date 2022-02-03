@@ -1,19 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Menu, Avatar } from "antd";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Register } from "../../../lib/types";
 import { useMutation } from "@apollo/client";
 import { LOG_OUT } from "../../../lib/graphql/mutations/LogOut";
 import { LogOut as LogOutData } from "../../../lib/graphql/mutations/LogOut/__generated__/LogOut";
+import { displaySuccessNotification, displayErrorMessage } from "../../../lib/utils/index";
 
-const { Item, SubMenu } = Menu;
 interface Props {
   register: Register;
+  setRegister: (register: Register) => void;
 }
+const { Item, SubMenu } = Menu;
 
-export const MenuItems = ({ register }: Props) => {
-  const [logout] = useMutation<LogOutData>(LOG_OUT);
+export const MenuItems = ({ register, setRegister }: Props) => {
+  const [logout] = useMutation<LogOutData>(LOG_OUT, {
+    onCompleted: (data) => {
+      if (data && data.logOut) {
+        setRegister(data.logOut);
+        displaySuccessNotification("You've successfully logged out!");
+      }
+    },
+    onError: (data) => {
+      displayErrorMessage("Sorry, you won't able to log out. Please try again later.");
+    },
+  });
 
   const handleLogOut = () => {
     logout();
@@ -23,11 +35,12 @@ export const MenuItems = ({ register }: Props) => {
       <SubMenu title={<Avatar src={register.avatar}></Avatar>}>
         <Item key="/user">
           <Link to={`/user/${register.id}`}></Link>
-          Profile
           <UserOutlined type="user" />
+          Profile
         </Item>
         <Item key="logout">
-          profile
+          <LogoutOutlined type="user" />
+          Log out
           <div onClick={handleLogOut}> Log out</div>
         </Item>
       </SubMenu>
@@ -40,10 +53,10 @@ export const MenuItems = ({ register }: Props) => {
     );
   return (
     <Menu mode="horizontal" selectable={false} className="menu">
-      <Item key="/host">
-        <Link to="/host">
+      <Item key="/cooker">
+        <Link to="/cooker">
           <HomeOutlined type="home" />
-          Host
+          Cooker
         </Link>
       </Item>
       {subMenuLogin}
