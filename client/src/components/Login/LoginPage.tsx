@@ -34,6 +34,7 @@ export const LoginPage = ({ setRegister }: Props) => {
 
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get("code");
+    console.log(`code:`, code);
     if (code) {
       logInRef.current({
         variables: {
@@ -47,6 +48,7 @@ export const LoginPage = ({ setRegister }: Props) => {
       const { data } = await client.query<AuthUrlData>({
         query: AUTH_URL,
       });
+      console.log(`data:`, data);
       window.location.href = data.authUrl;
     } catch {
       displayErrorMessage("Sorry! We weren't able to log you in. Please try again later!");
@@ -59,14 +61,13 @@ export const LoginPage = ({ setRegister }: Props) => {
       </Content>
     );
   }
-  const logInErrorBannerElement = logInError ? (
-    <ErrorBanner description="We weren't able to log you in to order-online sys.. Please try again later." />
-  ) : null;
-
   if (logInData && logInData.logIn) {
     const { id: registerId } = logInData.logIn;
     return <Navigate to={`/user/${registerId}`} />;
   }
+  const logInErrorBannerElement = logInError ? (
+    <ErrorBanner description="We weren't able to log you in to order-online sys.. Please try again later." />
+  ) : null;
 
   return (
     <Content className="log-in">

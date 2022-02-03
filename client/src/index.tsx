@@ -25,7 +25,7 @@ const App = () => {
   return (
     <Router>
       <Affix offsetTop={1} className="app__affix-header">
-        <AppHeader />
+        <AppHeader register={register} />
       </Affix>
       <Layout id="app">
         <Routes>

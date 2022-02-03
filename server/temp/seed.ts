@@ -19,7 +19,7 @@ const seed = async () => {
         contact: "wylian.sylvie@gmail.com",
         walletId: "acct_************",
         orderings: [],
-        listings: [],
+        listings: [new ObjectId("61f2e302c64e5d7ff9f8fb7f"), new ObjectId("61f2e302c64e5d7ff9f8fb80"), new ObjectId("61f2e302c64e5d7ff9f8fb81")],
       },
     ];
     const listings: Listing[] = [

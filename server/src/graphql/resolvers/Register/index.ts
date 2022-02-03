@@ -4,7 +4,7 @@ import { IResolvers } from "apollo-server-express";
 import { LogInArgs } from "./types";
 import crypto from "crypto";
 
-const logInViaGoogle = async (code: string, token: string, db: Database): Promise<User | undefined> => {
+const logInViaGoogle = async (code: string, token: string, db: Database): Promise<User | null> => {
   const { user } = await Google.logIn(code);
 
   if (!user) {
@@ -39,37 +39,37 @@ const logInViaGoogle = async (code: string, token: string, db: Database): Promis
 
   // return register as User;
 
-  if (!register) {
-    try {
-      const newUser = {
-        _id: userId,
-        token,
-        name: userName,
-        avatar: userAvatar,
-        contact: userEmail,
-        orderings: [],
-        listings: [],
-      };
-      await db.users.insertOne(newUser);
-
-      register = newUser;
-    } catch (error) {
-      throw new Error(`fail to inser one ${error}`);
-    }
-  }
-
   // if (!register) {
-  //   const insertRes = await db.users.insertOne({
-  //     _id: userId,
-  //     token,
-  //     name: userName,
-  //     avatar: userAvatar,
-  //     contact: userEmail,
-  //     orderings: [],
-  //     listings: [],
-  //   });
-  //   register = insertRes.op[0];
+  //   try {
+  //     const newUser = {
+  //       _id: userId,
+  //       token,
+  //       name: userName,
+  //       avatar: userAvatar,
+  //       contact: userEmail,
+  //       orderings: [],
+  //       listings: [],
+  //     };
+  //     await db.users.insertOne(newUser);
+
+  //     register = newUser;
+  //   } catch (error) {
+  //     throw new Error(`fail to inser one ${error}`);
+  //   }
   // }
+
+  if (!register) {
+    const insertRes = await db.users.insertOne({
+      _id: userId,
+      token,
+      name: userName,
+      avatar: userAvatar,
+      contact: userEmail,
+      orderings: [],
+      listings: [],
+    });
+    register = await db.users.findOne({ _id: insertRes.insertedId });
+  }
 
   return register;
 };
@@ -90,7 +90,7 @@ export const registerResolvers: IResolvers = {
       try {
         const code = input ? input.code : null;
         const token = crypto.randomBytes(16).toString("hex");
-        const register: User | undefined = code ? await logInViaGoogle(code, token, db) : undefined;
+        const register: User | null = code ? await logInViaGoogle(code, token, db) : null;
 
         if (!register) {
           return { didRequest: true };
