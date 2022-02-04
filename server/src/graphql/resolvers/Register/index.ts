@@ -1,10 +1,22 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+require("dotenv").config();
+
 import { Google } from "./../../../lib/api/Google";
 import { Database, Register, User } from "./../../../lib/types";
 import { IResolvers } from "apollo-server-express";
 import { LogInArgs } from "./types";
 import crypto from "crypto";
+import { Response, Request } from "express";
+import { NullValueNode } from "graphql";
 
-const logInViaGoogle = async (code: string, token: string, db: Database): Promise<User | null> => {
+const cookieOptions = {
+  httpOnly: true,
+  sameSite: true,
+  signed: true,
+  secure: process.env.NODE_ENV === "development" ? false : true,
+};
+
+const logInViaGoogle = async (code: string, token: string, db: Database, res: Response): Promise<User | null> => {
   const { user } = await Google.logIn(code);
 
   if (!user) {
@@ -71,9 +83,21 @@ const logInViaGoogle = async (code: string, token: string, db: Database): Promis
     register = await db.users.findOne({ _id: insertRes.insertedId });
   }
 
+  res.cookie("register", userId, { ...cookieOptions, maxAge: 365 * 24 * 60 * 60 * 1000 });
+
   return register;
 };
 
+const logInViaCookie = async (token: string, db: Database, req: Request, res: Response): Promise<User | null> => {
+  const updateRes = await db.users.findOneAndUpdate({ _id: req.signedCookies.register }, { $set: { token } }, { returnDocument: "after" });
+
+  const register = updateRes.value;
+
+  if (!register) {
+    res.clearCookie("register", cookieOptions);
+  }
+  return register;
+};
 export const registerResolvers: IResolvers = {
   Query: {
     authUrl: (): string => {
@@ -85,12 +109,12 @@ export const registerResolvers: IResolvers = {
     },
   },
   Mutation: {
-    logIn: async (_root: undefined, { input }: LogInArgs, db: Database): Promise<Register> => {
+    logIn: async (_root: undefined, { input }: LogInArgs, { db, req, res }: { db: Database; req: Request; res: Response }): Promise<Register> => {
       // return "Mutation.logIn";
       try {
         const code = input ? input.code : null;
         const token = crypto.randomBytes(16).toString("hex");
-        const register: User | null = code ? await logInViaGoogle(code, token, db) : null;
+        const register: User | null = code ? await logInViaGoogle(code, token, db, res) : await logInViaCookie(token, db, req, res);
 
         if (!register) {
           return { didRequest: true };
@@ -106,8 +130,9 @@ export const registerResolvers: IResolvers = {
         throw new Error(`fail to log in: ${error}`);
       }
     },
-    logOut: (): Register => {
+    logOut: (_root: undefined, _args: null, { res }: { res: Response }): Register => {
       try {
+        res.clearCookie("register", cookieOptions);
         return { didRequest: true };
       } catch (error) {
         throw new Error(`Fail to log out: ${error}`);

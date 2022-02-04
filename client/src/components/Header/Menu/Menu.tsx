@@ -33,15 +33,18 @@ export const MenuItems = ({ register, setRegister }: Props) => {
   const subMenuLogin =
     register.id && register.avatar ? (
       <SubMenu title={<Avatar src={register.avatar}></Avatar>}>
-        <Item key="/user">
-          <Link to={`/user/${register.id}`}></Link>
-          <UserOutlined type="user" />
-          Profile
+        <Item key={`/user/${register.id}`}>
+          <Link to={`/user/${register.id}`}>
+            <UserOutlined type="user" />
+            Profile
+          </Link>
         </Item>
-        <Item key="logout">
-          <LogoutOutlined type="user" />
+        <Item key="/logout">
+          <div onClick={handleLogOut}>
+            Log out
+            <LogoutOutlined type="logout" />
+          </div>
           Log out
-          <div onClick={handleLogOut}> Log out</div>
         </Item>
       </SubMenu>
     ) : (

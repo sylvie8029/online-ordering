@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import { ApolloServer } from "apollo-server-express";
 import { connectDatabase } from "./database";
 import { typeDefs, resolvers } from "./graphql";
+import cookieParser from "cookie-parser";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 require("dotenv").config();
@@ -10,8 +11,11 @@ require("dotenv").config();
 const mount = async (app: Application) => {
   const db = await connectDatabase();
 
-  console.log(`db:`, db); // const app = express();
-  const server = new ApolloServer({ typeDefs, resolvers, context: () => db });
+  app.use(cookieParser(process.env.SECRET));
+
+  // console.log(`db:`, db);
+  // const app = express();
+  const server = new ApolloServer({ typeDefs, resolvers, context: ({ req, res }) => ({ db, req, res }) });
 
   server.applyMiddleware({ app, path: "/api" });
   app.listen(process.env.PORT);

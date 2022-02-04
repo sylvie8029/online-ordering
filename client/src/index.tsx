@@ -1,5 +1,5 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import React, { useState } from "react";
+import { ApolloClient, ApolloProvider, InMemoryCache, useMutation } from "@apollo/client";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HomePage, CookerPage, Listing, Listings, NotFound, User, LoginPage, AppHeader } from "./components";
 import { Layout } from "antd";
 import { Register } from "./lib/types";
+import { LOG_IN } from "./lib/graphql/mutations/LogIn";
+import { LogIn as LogInData, LogInVariables } from "./lib/graphql/mutations/LogIn/__generated__/LogIn";
 
 import { Affix } from "antd";
 
@@ -22,6 +24,20 @@ const client = new ApolloClient({ uri: "/api", cache: new InMemoryCache() });
 const App = () => {
   const [register, setRegister] = useState<Register>(initialRegister);
   console.log(`register:`, register);
+
+  const [logIn, { error }] = useMutation<LogInData, LogInVariables>(LOG_IN, {
+    onCompleted: (data) => {
+      if (data && data.logIn) {
+        setRegister(data.logIn);
+      }
+    },
+  });
+
+  const logInRef = useRef(logIn);
+  useEffect(() => {
+    logInRef.current();
+  }, []);
+
   return (
     <Router>
       <Layout id="app">
