@@ -3,6 +3,6 @@ import merge from "lodash.merge";
 import { registerResolvers } from "./Register";
 // import { bookingResolvers } from "./Booking";
 // import { listingResolvers } from "./Listing";
-// import { userResolvers } from "./User";
+import { userResolvers } from "./User";
 
-export const resolvers = merge(registerResolvers);
+export const resolvers = merge(userResolvers, registerResolvers);
