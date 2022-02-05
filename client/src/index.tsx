@@ -5,12 +5,14 @@ import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HomePage, CookerPage, Listing, Listings, NotFound, User, LoginPage, AppHeader } from "./components";
-import { Layout } from "antd";
+import { Layout, Spin } from "antd";
 import { Register } from "./lib/types";
 import { LOG_IN } from "./lib/graphql/mutations/LogIn";
 import { LogIn as LogInData, LogInVariables } from "./lib/graphql/mutations/LogIn/__generated__/LogIn";
 
 import { Affix } from "antd";
+import { SkeletonOfHeader } from "./components/Header/SkeletonOfHeader";
+import { ErrorBanner } from "./components/ErrorBanner";
 
 const initialRegister: Register = {
   id: null,
@@ -20,7 +22,17 @@ const initialRegister: Register = {
   didRequest: false,
 };
 
-const client = new ApolloClient({ uri: "/api", cache: new InMemoryCache() });
+const client = new ApolloClient({
+  uri: "/api",
+  //  request:async operation=>{
+  //   operation.setContext({
+  //     headers:{
+  //       "X-CSRF-TOKEN"
+  //     }
+  //   })
+  // }
+  cache: new InMemoryCache(),
+});
 const App = () => {
   const [register, setRegister] = useState<Register>(initialRegister);
   console.log(`register:`, register);
@@ -38,9 +50,23 @@ const App = () => {
     logInRef.current();
   }, []);
 
+  if (!register.didRequest && !error) {
+    <Layout className="app-skeleton">
+      <SkeletonOfHeader></SkeletonOfHeader>
+      <div className="app-skeleton__spin-section">
+        <Spin size="large" tip="Launching Online-Order-sys"></Spin>
+      </div>
+    </Layout>;
+  }
+
+  const logInErrorBannerElement = error ? (
+    <ErrorBanner description="Sorry, your log in cannot be verified, please try again later."></ErrorBanner>
+  ) : null;
+
   return (
     <Router>
       <Layout id="app">
+        {logInErrorBannerElement}
         <Affix offsetTop={0} className="app__affix-header">
           <AppHeader register={register} setRegister={setRegister} />
         </Affix>
