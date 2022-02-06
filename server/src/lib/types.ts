@@ -42,6 +42,7 @@ export interface User {
 
   orderings: ObjectId[];
   listings: ObjectId[];
+  authorized?: boolean;
 }
 export interface Database {
   orderings: Collection<Ordering>;
