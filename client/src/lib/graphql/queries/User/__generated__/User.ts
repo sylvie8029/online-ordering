@@ -21,5 +21,5 @@ export interface User {
 }
 
 export interface UserVariables {
-  Id: string;
+  id: string;
 }

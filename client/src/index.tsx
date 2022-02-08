@@ -76,7 +76,7 @@ const App = () => {
           <Route path="/listing/:id" element={<Listing />}></Route>
           {/* <Route path="/listings/:location" element={<Listings />}></Route> */}
           <Route path="/login" element={<LoginPage setRegister={setRegister} />}></Route>
-          <Route path="/user/:id" element={<User />}></Route>
+          <Route path="/user/:id" element={<User register={register} />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Layout>
