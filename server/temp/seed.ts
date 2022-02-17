@@ -12,14 +12,13 @@ const seed = async () => {
     const db = await connectDatabase();
     const users: User[] = [
       {
-        _id: "5d378db94e84753160e08b55",
-        token: "token_************",
+        _id: "107930296587405991735",
+        token: "342f20ac2f419ea6c905531ff9a2f302",
         name: "wylian",
-        avatar: "001",
+        avatar: "https://lh3.googleusercontent.com/a/AATXAJxTgkHbhQ8NZVLXRpzm_Y5Ps0LY8Y...",
         contact: "wylian.sylvie@gmail.com",
-        walletId: "acct_************",
-        orderings: [],
-        listings: [new ObjectId("61f2e302c64e5d7ff9f8fb7f"), new ObjectId("61f2e302c64e5d7ff9f8fb80"), new ObjectId("61f2e302c64e5d7ff9f8fb81")],
+        orderings: [new ObjectId("61f2e302c64e5d7ff9f8fb7f")],
+        listings: [new ObjectId("61f2e302c64e5d7ff9f8fb80")],
       },
     ];
     const listings: Listing[] = [
@@ -30,7 +29,7 @@ const seed = async () => {
         price: 10,
         rating: 1,
         type: ListingType.Chinese,
-        cooker: "china",
+        cooker: "107930296587405991735",
         orderings: [],
       },
       {
@@ -40,7 +39,7 @@ const seed = async () => {
         price: 20,
         rating: 2,
         type: ListingType.American,
-        cooker: "american",
+        cooker: "107930296587405991735",
         orderings: [],
       },
       {

@@ -7,6 +7,14 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum ListingType {
+  AMERICAN = "AMERICAN",
+  CHINESE = "CHINESE",
+  INDIA = "INDIA",
+  JAPANESE = "JAPANESE",
+  KOREA = "KOREA",
+}
+
 export interface LogInInput {
   code: string;
 }
